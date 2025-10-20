@@ -9,7 +9,7 @@ from telegram.ext import (
 
 # --- CONFIG ---
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-ADMIN_ID = 123456789  # <-- O'zingizning Telegram ID
+ADMIN_ID = 7633032473  # <-- O'zingizning Telegram ID
 DATA_FILE = Path("/data/anime_db.json")  # Persistent Volume
 PAGE_SIZE = 5
 EPISODE_PAGE_SIZE = 12
