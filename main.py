@@ -282,9 +282,9 @@ def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
-app.add_handler(CommandHandler("addanime", addanime_start))
-app.add_handler(CallbackQueryHandler(addanime_buttons, pattern="^new_"))
-app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_new_anime_input))
+    app.add_handler(CommandHandler("addanime", addanime_start))
+    app.add_handler(CallbackQueryHandler(addanime_buttons, pattern="^new_"))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_new_anime_input))
     app.add_handler(CommandHandler("anime", anime_list))
     app.add_handler(CommandHandler("deleteanime", delete_anime))
     app.add_handler(CommandHandler("editanime", edit_anime_start))
@@ -292,6 +292,3 @@ app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_new_anime
 
     print("✅ Bot ishga tushdi!")
     app.run_polling()
-
-if __name__ == "__main__":
-    main()
