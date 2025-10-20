@@ -84,7 +84,78 @@ async def anime_list(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     await update.message.reply_text("🎬 Anime tanlang:", reply_markup=get_page_buttons(data, 0))
 
-# --- ADD ANIME CONVERSATION --- (sizning eski kodi shu qismda qoladi)
+# --- ADD ANIME CONVERSATION --- 
+# --- ANIME YARATISH ---
+ANIME_FIELDS = ["image", "title", "year", "country", "language", "genre", "episodes", "watch_link"]
+
+async def addanime_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message.from_user.id != ADMIN_ID:
+        await update.message.reply_text("⛔ Sizda bu buyruqdan foydalanish huquqi yo‘q.")
+        return
+    
+    context.user_data["new_anime"] = {f: None for f in ANIME_FIELDS}
+    
+    keyboard = [
+        [InlineKeyboardButton("🖼️ Rasm qo‘shish", callback_data="new_image")],
+        [InlineKeyboardButton("🏷️ Nomi", callback_data="new_title")],
+        [InlineKeyboardButton("📆 Yili", callback_data="new_year")],
+        [InlineKeyboardButton("🌍 Davlati", callback_data="new_country")],
+        [InlineKeyboardButton("🗣️ Tili", callback_data="new_language")],
+        [InlineKeyboardButton("🎭 Janr", callback_data="new_genre")],
+        [InlineKeyboardButton("🎞️ Qismlar qo‘shish", callback_data="new_episodes")],
+        [InlineKeyboardButton("▶️ Tomosha qilish havolasi", callback_data="new_watch_link")],
+        [InlineKeyboardButton("✅ Saqlash", callback_data="new_save")]
+    ]
+    
+    await update.message.reply_text(
+        "🆕 Yangi anime yaratish!\nQuyidagi tugmalardan kerakli ma’lumotlarni kiriting:",
+        reply_markup=InlineKeyboardMarkup(keyboard)
+    )
+
+
+# --- ADD ANIME CALLBACKLAR ---
+async def addanime_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+    data = query.data
+
+    if "new_" not in data:
+        return
+    
+    anime_data = context.user_data.get("new_anime", {})
+
+    # Ma'lumot kiritish uchun
+    if data != "new_save":
+        field = data.replace("new_", "")
+        context.user_data["current_field"] = field
+        await query.message.reply_text(f"✍️ {field} uchun qiymat kiriting:")
+        return
+
+    # Saqlash
+    if data == "new_save":
+        new_anime = context.user_data.get("new_anime", {})
+        if not new_anime.get("title"):
+            await query.message.reply_text("⚠️ Avvalo anime nomini kiriting!")
+            return
+
+        db = load_data()
+        db[new_anime["title"]] = new_anime
+        save_data(db)
+        await query.message.reply_text(f"✅ *{new_anime['title']}* saqlandi!", parse_mode="Markdown")
+        context.user_data.clear()
+
+
+# --- KIRITILGAN MA'LUMOTLARNI QABUL QILISH ---
+async def handle_new_anime_input(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    field = context.user_data.get("current_field")
+    if not field:
+        return
+
+    value = update.message.text
+    context.user_data["new_anime"][field] = value
+    context.user_data["current_field"] = None
+
+    await update.message.reply_text(f"✅ {field} saqlandi!")
 # ... addanime_start, addanime_title, addanime_description, addanime_image, addanime_videos, addanime_episodes_count,
 # addanime_status, addanime_quality, addanime_genre, addanime_channel, addanime_confirm, addanime_cancel ...
 
