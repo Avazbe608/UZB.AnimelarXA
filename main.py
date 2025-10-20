@@ -87,7 +87,7 @@ async def anime_list(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # --- ADD ANIME CONVERSATION --- 
 # --- ANIME YARATISH ---
-ANIME_FIELDS = ["image", "title", "year", "country", "language", "genre", "episodes", "watch_link"]
+ANIME_FIELDS = ["image", "title", "description", "year", "country", "language", "genre", "episodes", "watch_link"]
 
 async def addanime_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.from_user.id != ADMIN_ID:
