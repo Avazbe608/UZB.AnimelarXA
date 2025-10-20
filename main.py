@@ -206,7 +206,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # --- Add / Edit Epizod / Fields handled in handle_message ---
     elif data.startswith("edit_field_"):
         field = data.replace("edit_field_", "")
-        context.user_data
+        pass
 def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
