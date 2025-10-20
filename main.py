@@ -95,7 +95,8 @@ async def addanime_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     
     context.user_data["new_anime"] = {f: None for f in ANIME_FIELDS}
-    
+    context.user_data["new_anime"]["episodes"] = {}
+
     keyboard = [
         [InlineKeyboardButton("🖼️ Rasm qo‘shish", callback_data="new_image")],
         [InlineKeyboardButton("🏷️ Nomi", callback_data="new_title")],
