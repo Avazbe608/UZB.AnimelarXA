@@ -12,7 +12,6 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 ADMIN_ID = 7633032473  # <-- O'zingizning Telegram ID
 DATA_FILE = Path("/data/anime_db.json")
 DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
-Persistent Volume
 PAGE_SIZE = 5
 EPISODE_PAGE_SIZE = 12
 
