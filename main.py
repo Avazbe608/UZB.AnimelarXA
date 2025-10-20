@@ -138,7 +138,7 @@ async def addanime_genre(update: Update, context: ContextTypes.DEFAULT_TYPE):
     return CHANNEL
 
 async def addanime_channel(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    context.user_data["channel"] = update.message.text.strip()
+    context.user_data["UZB.AnimelarXA_Kanali"] = update.message.text.strip()
     u = context.user_data
     caption = (
         f"🎬 *{u['title']}*\n\n"
