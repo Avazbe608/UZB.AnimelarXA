@@ -207,3 +207,17 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif data.startswith("edit_field_"):
         field = data.replace("edit_field_", "")
         context.user_data
+def main():
+    app = ApplicationBuilder().token(BOT_TOKEN).build()
+
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("anime", anime_list))
+    app.add_handler(CommandHandler("deleteanime", delete_anime))
+    app.add_handler(CommandHandler("editanime", edit_anime_start))
+    app.add_handler(CallbackQueryHandler(button_handler))
+
+    print("✅ Bot ishga tushdi!")
+    app.run_polling()
+
+if __name__ == "__main__":
+    main()
