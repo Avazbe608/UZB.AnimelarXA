@@ -203,7 +203,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if anime:
             caption = (
                 f"🎬 *{title}*\n\n"
-                f"📝 {anime['description']}\n"
+                f"📝 {anime.get('description', 'Tavsif yo‘q')}\n"
                 f"🎞️ Qismlar: {anime.get('episodes_count','?')}\n"
                 f"📺 Holati: {anime.get('status','?')}\n"
                 f"💎 Sifati: {anime.get('quality','?')}\n"
