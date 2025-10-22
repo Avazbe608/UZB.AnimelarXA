@@ -245,3 +245,21 @@ async def delete_anime(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("🗑️ O‘chirish uchun anime tanlang:", reply_markup=InlineKeyboardMarkup(keyboard))
 
 # --- RUN ---
+def main():
+    app = ApplicationBuilder().token(BOT_TOKEN).build()
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("anime", anime_list))
+    app.add_handler(CommandHandler("addanime", addanime_start))
+    app.add_handler(CommandHandler("deleteanime", delete_anime))
+
+    # Callback tugmalar
+    app.add_handler(CallbackQueryHandler(addanime_buttons, pattern="^new_"))
+    app.add_handler(CallbackQueryHandler(button_handler))
+    app.add_handler(CallbackQueryHandler(handle_episode_actions, pattern="^(add_ep_|edit_ep_|del_ep_|ep_)"))
+
+    # Matn xabarlari
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_new_anime_input))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text_input))
+
+    print("✅ Bot ishga tushdi!")
+    app.run_polling()
